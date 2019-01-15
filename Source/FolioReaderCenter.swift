@@ -347,6 +347,8 @@ open class FolioReaderCenter: UIViewController, UICollectionViewDelegate, UIColl
         if(self.readerConfig.displayTitle){
             navigationItem.title = book.title
         }
+      //Vivek
+      navigationItem.title = ""
     }
 
     func reloadData() {
