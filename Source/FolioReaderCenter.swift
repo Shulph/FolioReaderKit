@@ -49,7 +49,9 @@ open class FolioReaderCenter: UIViewController, UICollectionViewDelegate, UIColl
 
     /// The collection view with pages
     open var collectionView: UICollectionView!
-    
+  //Vivek
+  var autoHideNavigationTimer = Timer()
+  var titleNavigationbar = UILabel(frame: CGRect.zero)
     let collectionViewLayout = UICollectionViewFlowLayout()
     var loadingView: UIActivityIndicatorView!
     var pages: [String]!
@@ -155,6 +157,8 @@ open class FolioReaderCenter: UIViewController, UICollectionViewDelegate, UIColl
         collectionView.backgroundColor = background
         collectionView.decelerationRate = UIScrollViewDecelerationRateFast
         enableScrollBetweenChapters(scrollEnabled: true)
+      //Vivek
+      collectionView.frame = CGRect(x: 0, y: 60, width: view.frame.size.width, height: view.frame.size.height-60)
         view.addSubview(collectionView)
         
         if #available(iOS 11.0, *) {
@@ -196,6 +200,11 @@ open class FolioReaderCenter: UIViewController, UICollectionViewDelegate, UIColl
         if let scrollScrubber = scrollScrubber {
             view.addSubview(scrollScrubber.slider)
         }
+      //Vivek
+      DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()+1.0) {
+        
+        self.addTitleNavigationBar(shouldHide: (self.navigationController?.isNavigationBarHidden)!)
+      }
     }
 
     override open func viewWillAppear(_ animated: Bool) {
@@ -249,6 +258,53 @@ open class FolioReaderCenter: UIViewController, UICollectionViewDelegate, UIColl
         return CGRect(x: self.pageWidth + 10, y: scrubberY, width: 40, height: (self.pageHeight - 100))
     }
 
+  
+  //Vivek
+  func configureNavigationBarbtnwithNightMode()
+  {
+    if self.folioReader.nightMode
+    {
+      titleNavigationbar.textColor = UIColor.white
+      if navigationItem.leftBarButtonItems != nil
+      {
+        for obj in navigationItem.leftBarButtonItems!
+        {
+          obj.image = obj.image?.imageTintColor(UIColor.white)?.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
+          obj.tintColor = UIColor.white
+        }
+      }
+      if navigationItem.rightBarButtonItems != nil
+      {
+        for obj in navigationItem.rightBarButtonItems!
+        {
+          obj.image = obj.image?.imageTintColor(UIColor.white)?.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
+          obj.tintColor = UIColor.white
+        }
+      }
+    }
+    else
+    {
+      titleNavigationbar.textColor = UIColor.black
+      if navigationItem.leftBarButtonItems != nil
+      {
+        for obj in navigationItem.leftBarButtonItems!
+        {
+          obj.image = obj.image?.imageTintColor(UIColor.black)?.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
+          obj.tintColor = UIColor.black
+        }
+      }
+      if navigationItem.rightBarButtonItems != nil
+      {
+        for obj in navigationItem.rightBarButtonItems!
+        {
+          
+          obj.image = obj.image?.imageTintColor(UIColor.black)?.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
+          obj.tintColor = UIColor.black
+        }
+      }
+    }
+  }
+  
     func configureNavBar() {
         let navBackground = folioReader.isNight(self.readerConfig.nightModeMenuBackground, UIColor.white)
         let tintColor = readerConfig.tintColor
@@ -410,7 +466,66 @@ open class FolioReaderCenter: UIViewController, UICollectionViewDelegate, UIColl
 
         self.updateBarsStatus(shouldHide)
     }
-
+  //Vivek
+  func addTitleNavigationBar(shouldHide:Bool)
+  {
+    if shouldHide == true
+    {
+      titleNavigationbar = UILabel(frame: CGRect(x: 0, y: 0, width: (self.navigationController?.navigationBar.frame.size.width)!, height: 60))
+      
+      titleNavigationbar.text = book.title
+      titleNavigationbar.numberOfLines = 0
+      titleNavigationbar.textAlignment = .center
+      titleNavigationbar.font = UIFont.boldSystemFont(ofSize: 16.0)
+      titleNavigationbar.backgroundColor = UIColor.clear
+      if self.folioReader.nightMode
+      {
+        
+        titleNavigationbar.textColor = UIColor.white
+      }
+      else
+      {
+        
+        titleNavigationbar.textColor = UIColor.black
+      }
+      
+      DispatchQueue.main.async {
+        UIApplication.shared.keyWindow?.addSubview(self.titleNavigationbar)
+      }
+      
+      
+    }
+    else
+    {
+      DispatchQueue.main.async {
+        self.titleNavigationbar.removeFromSuperview()
+      }
+      
+    }
+    
+  }
+  func autoHideNavigationBar()
+  {
+    if self.navigationController?.isNavigationBarHidden == false
+    {
+      if #available(iOS 10.0, *) {
+        autoHideNavigationTimer = Timer.scheduledTimer(withTimeInterval: 7.0, repeats: false, block: { (timer) in
+          if self.navigationController?.isNavigationBarHidden == false
+          {
+            self.updateBarsStatus(true)
+            timer.invalidate()
+          }
+        })
+      } else {
+        // Fallback on earlier versions
+      }
+      
+    }
+    else
+    {
+      autoHideNavigationTimer.invalidate()
+    }
+  }
     private func updateBarsStatus(_ shouldHide: Bool, shouldShowIndicator: Bool = false) {
         guard let readerContainer = readerContainer else { return }
         readerContainer.shouldHideStatusBar = shouldHide
@@ -424,6 +539,9 @@ open class FolioReaderCenter: UIViewController, UICollectionViewDelegate, UIColl
             }
         })
         self.navigationController?.setNavigationBarHidden(shouldHide, animated: true)
+      //Vivek
+      self.addTitleNavigationBar(shouldHide: shouldHide)
+      self.autoHideNavigationBar()
     }
 
     // MARK: UICollectionViewDataSource
