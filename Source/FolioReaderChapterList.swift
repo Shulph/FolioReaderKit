@@ -96,6 +96,10 @@ class FolioReaderChapterList: UITableViewController {
             (tocReference.resource != nil) {
             let resource = reference.resource
             cell.indexLabel?.textColor = (tocReference.resource == resource ? self.readerConfig.tintColor : self.readerConfig.menuTextColor)
+          //Vivek
+           let shulphSelectedColor = UIColor(rgba:"#FCCD40")
+          let othercolor:UIColor = UIColor(red: 0.44, green: 0.44, blue: 0.44, alpha: 1.00)
+          cell.indexLabel?.textColor = (tocReference.resource == resource ? othercolor : shulphSelectedColor)
         }
 
         cell.layoutMargins = UIEdgeInsets.zero

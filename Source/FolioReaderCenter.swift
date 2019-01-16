@@ -262,6 +262,7 @@ open class FolioReaderCenter: UIViewController, UICollectionViewDelegate, UIColl
   //Vivek
   func configureNavigationBarbtnwithNightMode()
   {
+    let shulphSelectedColor = UIColor(rgba:"#FCCD40")
     if self.folioReader.nightMode
     {
       titleNavigationbar.textColor = UIColor.white
@@ -269,16 +270,17 @@ open class FolioReaderCenter: UIViewController, UICollectionViewDelegate, UIColl
       {
         for obj in navigationItem.leftBarButtonItems!
         {
-          obj.image = obj.image?.imageTintColor(UIColor.white)?.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
-          obj.tintColor = UIColor.white
+          
+          obj.image = obj.image?.imageTintColor(shulphSelectedColor)?.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
+          obj.tintColor = shulphSelectedColor
         }
       }
       if navigationItem.rightBarButtonItems != nil
       {
         for obj in navigationItem.rightBarButtonItems!
         {
-          obj.image = obj.image?.imageTintColor(UIColor.white)?.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
-          obj.tintColor = UIColor.white
+          obj.image = obj.image?.imageTintColor(shulphSelectedColor)?.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
+          obj.tintColor = shulphSelectedColor
         }
       }
     }
@@ -493,7 +495,7 @@ open class FolioReaderCenter: UIViewController, UICollectionViewDelegate, UIColl
       }
       
       DispatchQueue.main.async {
-        UIApplication.shared.keyWindow?.addSubview(self.titleNavigationbar)
+        self.view.addSubview(self.titleNavigationbar)
       }
       
       

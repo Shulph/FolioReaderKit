@@ -434,6 +434,12 @@ internal extension UIViewController {
         let closeImage = UIImage(readerImageNamed: "icon-navbar-close")?.ignoreSystemTint(withConfiguration: readerConfig)
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: closeImage, style: .plain, target: self, action: #selector(dismiss as () -> Void))
     }
+  //Vivek
+  func setCloseButtonShulph(color:UIColor) {
+    
+    let closeImage = UIImage(readerImageNamed: "icon-navbar-close")?.imageTintColor(color)
+    self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: closeImage, style: .plain, target: self, action: #selector(dismiss as () -> Void))
+  }
 
     @objc func dismiss() {
         self.dismiss(nil)

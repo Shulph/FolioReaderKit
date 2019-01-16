@@ -111,7 +111,9 @@ class FolioReaderFontsMenu: UIViewController, SMSegmentViewDelegate, UIGestureRe
         view.addSubview(menuView)
 
         let normalColor = UIColor(white: 0.5, alpha: 0.7)
-        let selectedColor = self.readerConfig.tintColor
+       let selectedColor = self.readerConfig.tintColor
+      //Vivek
+        let shulphSelectedColor = UIColor(rgba:"#FCCD40")
         let sun = UIImage(readerImageNamed: "icon-sun")
         let moon = UIImage(readerImageNamed: "icon-moon")
         let fontSmall = UIImage(readerImageNamed: "icon-font-small")
@@ -124,7 +126,6 @@ class FolioReaderFontsMenu: UIViewController, SMSegmentViewDelegate, UIGestureRe
 
         let sunSelected = sun?.imageTintColor(selectedColor)?.withRenderingMode(.alwaysOriginal)
         let moonSelected = moon?.imageTintColor(selectedColor)?.withRenderingMode(.alwaysOriginal)
-
         // Day night mode
         let dayNight = SMSegmentView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 55),
                                      separatorColour: self.readerConfig.nightModeSeparatorColor,
@@ -142,6 +143,10 @@ class FolioReaderFontsMenu: UIViewController, SMSegmentViewDelegate, UIGestureRe
         dayNight.addSegmentWithTitle(self.readerConfig.localizedFontMenuDay, onSelectionImage: sunSelected, offSelectionImage: sunNormal)
         dayNight.addSegmentWithTitle(self.readerConfig.localizedFontMenuNight, onSelectionImage: moonSelected, offSelectionImage: moonNormal)
         dayNight.selectSegmentAtIndex(self.folioReader.nightMode ? 1 : 0)
+      //Vivek
+      dayNight.segmentOnSelectionTextColour = shulphSelectedColor
+      dayNight.segments[0].onSelectionImage = sun?.imageTintColor(shulphSelectedColor)?.withRenderingMode(.alwaysOriginal)
+      dayNight.segments[1].onSelectionImage = moon?.imageTintColor(shulphSelectedColor)?.withRenderingMode(.alwaysOriginal)
         menuView.addSubview(dayNight)
 
 
@@ -161,6 +166,8 @@ class FolioReaderFontsMenu: UIViewController, SMSegmentViewDelegate, UIGestureRe
                                         keySegmentOffSelectionTextColour: normalColor,
                                         keyContentVerticalMargin: 17 as AnyObject
             ])
+      //Vivek
+        fontName.segmentOnSelectionTextColour = shulphSelectedColor
         fontName.delegate = self
         fontName.tag = 2
 
@@ -193,7 +200,8 @@ class FolioReaderFontsMenu: UIViewController, SMSegmentViewDelegate, UIGestureRe
         slider.thumbShadowOffset = CGSize(width: 0, height: 2)
         slider.thumbShadowRadius = 3
         slider.thumbColor = selectedColor
-
+      //Vivek
+        slider.thumbColor = shulphSelectedColor
         slider.backgroundColor = UIColor.clear
         slider.tintColor = self.readerConfig.nightModeSeparatorColor
         slider.minimumValue = 0
@@ -247,11 +255,13 @@ class FolioReaderFontsMenu: UIViewController, SMSegmentViewDelegate, UIGestureRe
                                                 keySegmentOffSelectionTextColour: normalColor,
                                                 keyContentVerticalMargin: 17 as AnyObject
             ])
+      //Vivek
+      layoutDirection.segmentOnSelectionTextColour = shulphSelectedColor
         layoutDirection.delegate = self
         layoutDirection.tag = 3
         layoutDirection.addSegmentWithTitle(self.readerConfig.localizedLayoutVertical, onSelectionImage: verticalSelected, offSelectionImage: verticalNormal)
         layoutDirection.addSegmentWithTitle(self.readerConfig.localizedLayoutHorizontal, onSelectionImage: horizontalSelected, offSelectionImage: horizontalNormal)
-
+      
         var scrollDirection = FolioReaderScrollDirection(rawValue: self.folioReader.currentScrollDirection)
 
         if scrollDirection == .defaultVertical && self.readerConfig.scrollDirection != .defaultVertical {
@@ -266,7 +276,11 @@ class FolioReaderFontsMenu: UIViewController, SMSegmentViewDelegate, UIGestureRe
         }
         menuView.addSubview(layoutDirection)
     }
-
+  //Vivek
+  func alterMenuviewColor()
+  {
+    
+  }
     // MARK: - SMSegmentView delegate
 
     func segmentView(_ segmentView: SMSegmentView, didSelectSegmentAtIndex index: Int) {

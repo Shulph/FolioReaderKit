@@ -76,6 +76,9 @@ class FolioReaderHighlightList: UITableViewController {
 
         dateLabel.text = dateString.uppercased()
         dateLabel.textColor = self.folioReader.isNight(UIColor(white: 5, alpha: 0.3), UIColor.lightGray)
+      //Vivek
+       let shulphSelectedColor = UIColor(rgba:"#FCCD40")
+      dateLabel.textColor = shulphSelectedColor
         dateLabel.frame = CGRect(x: 20, y: 20, width: view.frame.width-40, height: dateLabel.frame.height)
 
         // Text

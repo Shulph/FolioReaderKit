@@ -65,6 +65,9 @@ class PageViewController: UIPageViewController {
         }
 
         self.setCloseButton(withConfiguration: self.readerConfig)
+      //Vivek
+       let shulphSelectedColor = UIColor(rgba:"#FCCD40")
+      self.setCloseButtonShulph(color: shulphSelectedColor)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -78,6 +81,9 @@ class PageViewController: UIPageViewController {
         let navText = self.folioReader.isNight(UIColor.white, UIColor.black)
         let font = UIFont(name: "Avenir-Light", size: 17)!
         setTranslucentNavigation(false, color: navBackground, tintColor: tintColor, titleColor: navText, andFont: font)
+      //Vivek
+      let shulphSelectedColor = UIColor(rgba:"#FCCD40")
+        setTranslucentNavigation(false, color: navBackground, tintColor: shulphSelectedColor, titleColor: navText, andFont: font)
     }
 
     // MARK: - Segmented control changes
