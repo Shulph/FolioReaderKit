@@ -387,7 +387,9 @@ open class FolioReaderPage: UICollectionViewCell, UIWebViewDelegate, UIGestureRe
             guard (selected == nil || selected?.isEmpty == true) else {
                 return
             }
-
+          //Vivek
+          self.shouldShowBar = true
+          self.menuIsVisible = false
             let delay = 0.4 * Double(NSEC_PER_SEC) // 0.4 seconds * nanoseconds per seconds
             let dispatchTime = (DispatchTime.now() + (Double(Int64(delay)) / Double(NSEC_PER_SEC)))
             
