@@ -158,8 +158,15 @@ open class FolioReaderCenter: UIViewController, UICollectionViewDelegate, UIColl
         collectionView.decelerationRate = UIScrollViewDecelerationRateFast
         enableScrollBetweenChapters(scrollEnabled: true)
       //Vivek
+      if self.hasSafeArea
+      {
+       collectionView.frame = CGRect(x: 0, y: 68, width: view.frame.size.width, height: self.getScreenBounds().height-90)
+      }
+      else
+      {
       collectionView.frame = CGRect(x: 0, y: 60, width: view.frame.size.width, height: view.frame.size.height-60)
-        view.addSubview(collectionView)
+      }
+      view.addSubview(collectionView)
         
         if #available(iOS 11.0, *) {
             collectionView.contentInsetAdjustmentBehavior = .never
@@ -476,7 +483,15 @@ open class FolioReaderCenter: UIViewController, UICollectionViewDelegate, UIColl
   {
     if shouldHide == true
     {
+       self.titleNavigationbar.removeFromSuperview()
+      if self.hasSafeArea
+      {
+        titleNavigationbar = UILabel(frame: CGRect(x: 0, y: 24, width: (self.navigationController?.navigationBar.frame.size.width)!, height: 60))
+      }
+      else
+      {
       titleNavigationbar = UILabel(frame: CGRect(x: 0, y: 0, width: (self.navigationController?.navigationBar.frame.size.width)!, height: 60))
+      }
       
       titleNavigationbar.text = book.title
       titleNavigationbar.numberOfLines = 0
@@ -495,6 +510,7 @@ open class FolioReaderCenter: UIViewController, UICollectionViewDelegate, UIColl
       }
       
       DispatchQueue.main.async {
+       
         self.view.addSubview(self.titleNavigationbar)
       }
       
@@ -1531,7 +1547,12 @@ open class FolioReaderCenter: UIViewController, UICollectionViewDelegate, UIColl
 // MARK: FolioPageDelegate
 
 extension FolioReaderCenter: FolioReaderPageDelegate {
-
+  public var hasSafeArea: Bool {
+    guard #available(iOS 11.0, *), let topPadding = UIApplication.shared.keyWindow?.safeAreaInsets.top, topPadding > 24 else {
+      return false
+    }
+    return true
+  }
     public func pageDidLoad(_ page: FolioReaderPage) {
         if self.readerConfig.loadSavedPositionForCurrentBook, let position = folioReader.savedPositionForCurrentBook {
             let pageNumber = position["pageNumber"] as? Int
