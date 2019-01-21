@@ -40,6 +40,10 @@ class FolioReaderAddHighlightNote: UIViewController {
         super.viewDidLoad()
         
         setCloseButton(withConfiguration: readerConfig)
+      //Vivek
+      let shulphSelectedColor = UIColor(rgba:"#FCCD40")
+      self.setCloseButtonShulph(color: shulphSelectedColor)
+      self.navigationItem.leftBarButtonItem?.tintColor = shulphSelectedColor
         prepareScrollView()
         configureTextView()
         configureLabel()
@@ -139,6 +143,10 @@ class FolioReaderAddHighlightNote: UIViewController {
         let titleAttrs = [NSAttributedStringKey.foregroundColor: readerConfig.tintColor]
         let saveButton = UIBarButtonItem(title: readerConfig.localizedSave, style: .plain, target: self, action: #selector(saveNote(_:)))
         saveButton.setTitleTextAttributes(titleAttrs, for: UIControlState())
+      //Vivek
+      let shulphSelectedColor = UIColor(rgba:"#FCCD40")
+      let shulphtitleAttrs = [NSAttributedStringKey.foregroundColor: shulphSelectedColor]
+      saveButton.setTitleTextAttributes(shulphtitleAttrs, for: UIControlState())
         navigationItem.rightBarButtonItem = saveButton
     }
     
