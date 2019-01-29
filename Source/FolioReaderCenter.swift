@@ -272,7 +272,7 @@ open class FolioReaderCenter: UIViewController, UICollectionViewDelegate, UIColl
     let shulphSelectedColor = UIColor(rgba:"#FCCD40")
     if self.folioReader.nightMode
     {
-      titleNavigationbar.textColor = UIColor.white
+
       if navigationItem.leftBarButtonItems != nil
       {
         for obj in navigationItem.leftBarButtonItems!
@@ -293,7 +293,6 @@ open class FolioReaderCenter: UIViewController, UICollectionViewDelegate, UIColl
     }
     else
     {
-      titleNavigationbar.textColor = UIColor.black
       if navigationItem.leftBarButtonItems != nil
       {
         for obj in navigationItem.leftBarButtonItems!
@@ -498,16 +497,7 @@ open class FolioReaderCenter: UIViewController, UICollectionViewDelegate, UIColl
       titleNavigationbar.textAlignment = .center
       titleNavigationbar.font = UIFont.boldSystemFont(ofSize: 16.0)
       titleNavigationbar.backgroundColor = UIColor.clear
-      if self.folioReader.nightMode
-      {
-        
-        titleNavigationbar.textColor = UIColor.white
-      }
-      else
-      {
-        
-        titleNavigationbar.textColor = UIColor.black
-      }
+      titleNavigationbar.textColor = UIColor(rgba: "#B5B6B5")
       
       DispatchQueue.main.async {
        

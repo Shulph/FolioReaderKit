@@ -103,6 +103,12 @@ open class FolioReaderPage: UICollectionViewCell, UIWebViewDelegate, UIGestureRe
         tapGestureRecognizer.numberOfTapsRequired = 1
         tapGestureRecognizer.delegate = self
         webView?.addGestureRecognizer(tapGestureRecognizer)
+      //Vivek
+      webView?.removeGestureRecognizer(tapGestureRecognizer)
+      let shulphtapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.shulphhandleTapGesture(_:)))
+      shulphtapGestureRecognizer.numberOfTapsRequired = 1
+      shulphtapGestureRecognizer.delegate = self
+      webView?.addGestureRecognizer(shulphtapGestureRecognizer)
     }
 
     required public init?(coder aDecoder: NSCoder) {
@@ -377,7 +383,32 @@ open class FolioReaderPage: UICollectionViewCell, UIWebViewDelegate, UIGestureRe
         }
         return false
     }
-
+  //Vivek
+  @objc open func shulphhandleTapGesture(_ recognizer: UITapGestureRecognizer) {
+    
+    
+    if let _navigationController = self.folioReader.readerCenter?.navigationController, (_navigationController.isNavigationBarHidden == true) {
+      let selected = webView?.js("getSelectedText()")
+      
+      guard (selected == nil || selected?.isEmpty == true) else {
+        return
+      }
+      //Vivek
+      self.shouldShowBar = true
+      self.menuIsVisible = false
+      let delay = 0.4 * Double(NSEC_PER_SEC) // 0.4 seconds * nanoseconds per seconds
+      let dispatchTime = (DispatchTime.now() + (Double(Int64(delay)) / Double(NSEC_PER_SEC)))
+      
+      DispatchQueue.main.asyncAfter(deadline: dispatchTime, execute: {
+        if (self.shouldShowBar == true && self.menuIsVisible == false) {
+          self.folioReader.readerCenter?.toggleBars()
+        }
+      })
+    } else if (self.readerConfig.shouldHideNavigationOnTap == true) {
+      self.folioReader.readerCenter?.hideBars()
+      self.menuIsVisible = false
+    }
+  }
     @objc open func handleTapGesture(_ recognizer: UITapGestureRecognizer) {
         self.delegate?.pageTap?(recognizer)
         
