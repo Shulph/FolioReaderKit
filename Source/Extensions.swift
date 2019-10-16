@@ -465,7 +465,7 @@ internal extension UIViewController {
     func setTranslucentNavigation(_ translucent: Bool = true, color: UIColor, tintColor: UIColor = UIColor.white, titleColor: UIColor = UIColor.black, andFont font: UIFont = UIFont.systemFont(ofSize: 17)) {
         if #available(iOS 13.0, *) {
                    let coloredAppearance = UINavigationBarAppearance()
-            coloredAppearance.backIndicatorImage = UIImage.imageWithColor(color)
+            coloredAppearance.backgroundImage = UIImage.imageWithColor(color)
 //                   coloredAppearance.configureWithOpaqueBackground()
 //                   coloredAppearance.backgroundColor = .white
 //                   coloredAppearance.titleTextAttributes = [.foregroundColor: UIColor.black]
