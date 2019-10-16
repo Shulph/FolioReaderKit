@@ -466,6 +466,8 @@ internal extension UIViewController {
         if #available(iOS 13.0, *) {
                    let coloredAppearance = UINavigationBarAppearance()
             coloredAppearance.backgroundImage = UIImage.imageWithColor(color)
+            self.navigationController?.navigationBar.standardAppearance = coloredAppearance
+            self.navigationController?.navigationBar.scrollEdgeAppearance = coloredAppearance
 //                   coloredAppearance.configureWithOpaqueBackground()
 //                   coloredAppearance.backgroundColor = .white
 //                   coloredAppearance.titleTextAttributes = [.foregroundColor: UIColor.black]
